@@ -1,13 +1,5 @@
 import mariadb from 'mariadb';
 
-//const pool = mariadb.createPool({
-//  host: 'mariadb',
-//  database: 'mydb',
-//  user: 'root',
-//  password: '123456',
-//  connectionLimit: 5
-//});
-
 export default class MariaDB {
   private static _instance: MariaDB;
 
@@ -29,6 +21,12 @@ export default class MariaDB {
     return this._instance || (this._instance = new this());
   }
 
+  static async executeQuery(query: string) {
+    try {
+      return await this.instance.pool.query(query);
+    } catch(error) { throw error }
+  }
+
   private dbConnect() {
     try {
       this.pool.getConnection();
@@ -39,23 +37,4 @@ export default class MariaDB {
     }
   }
 }
-
-//async function asyncFunction() {
-//  let conn;
-//  try {
-//    conn = await pool.getConnection();
-//    const rows = await conn.query("SELECT * from heroes");
-//    // rows: [ {val: 1}, meta: ... ]
-
-//    console.log(rows);
-//    //const res = await conn.query("INSERT INTO myTable value (?, ?)", [1, "mariadb"]);
-//    // res: { affectedRows: 1, insertId: 1, warningStatus: 0 }
-//  } catch (err) {
-//    throw err;
-//  } finally {
-//    if (conn) conn.release(); //release to pool
-//  }
-//}
-
-//export default pool;
 
