@@ -10,7 +10,7 @@ docker-compose run app yarn
 Without dependencies
 ```shell
 docker-compose run app yarn express
-docker-compose run app yarn add nodemon typescript @types/express --dev
+docker-compose run app yarn add nodemon typescript @types/express copyfiles --dev
 ```
 
 > run `npm install -g typescript`
