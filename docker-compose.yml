@@ -1,0 +1,27 @@
+version: '3'
+services:
+  app:
+    build: .
+    command: sh -c "yarn start:dev"
+    volumes:
+      - .:/myapp
+    ports:
+      - 8080:3000
+    depends_on:
+      - mariadb
+  mariadb:
+    image: mariadb
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: mydb
+      MYSQL_ROOT_PASSWORD: 123456
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
+    depends_on:
+      - mariadb
+
